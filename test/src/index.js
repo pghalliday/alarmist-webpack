@@ -1,24 +1,8 @@
 import alarmistWebpack from '../../src';
 import alarmist from 'alarmist';
-import {Writable} from 'stream';
+import {job} from '../helpers/alarmist';
 
 const name = 'name';
-
-const job = {
-  complete: sinon.spy(() => job.callback()),
-  log: new Writable({
-    write: (chunk, encoding, callback) => {
-      job.logBuffer = Buffer.concat([job.logBuffer, chunk]);
-      callback();
-    },
-  }),
-  reset: (callback) => {
-    job.callback = callback;
-    job.logBuffer = Buffer.alloc(0);
-    job.complete.reset();
-  },
-};
-
 let watcher;
 
 describe('alarmistWebpack', () => {
@@ -26,7 +10,6 @@ describe('alarmistWebpack', () => {
     describe('with a successful build', () => {
       before((done) => {
         job.reset(done);
-        sinon.stub(alarmist, 'createJob', async () => Promise.resolve(job));
         watcher = alarmistWebpack.watch(name, {
           entry: './test/fixtures/webpack/success/index.js',
           output: {
@@ -36,7 +19,6 @@ describe('alarmistWebpack', () => {
         });
       });
       after((done) => {
-        alarmist.createJob.restore();
         watcher.close(done);
       });
 
@@ -58,7 +40,6 @@ describe('alarmistWebpack', () => {
     describe('with a failing build', () => {
       before((done) => {
         job.reset(done);
-        sinon.stub(alarmist, 'createJob', async () => Promise.resolve(job));
         watcher = alarmistWebpack.watch(name, {
           entry: './test/fixtures/webpack/fail/index.js',
           output: {
@@ -68,7 +49,6 @@ describe('alarmistWebpack', () => {
         });
       });
       after((done) => {
-        alarmist.createJob.restore();
         watcher.close(done);
       });
 

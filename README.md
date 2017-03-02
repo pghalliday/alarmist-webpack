@@ -7,7 +7,7 @@ Wrap webpack watch in alarmist jobs
 
 ## Usage
 
-As this a tool linking `webpack` with `alarmist`, it is expected that your project already has both `alarmist` and `webpack` installed
+As this is a tool linking `webpack` with `alarmist`, it is expected that your project already has both `alarmist` and `webpack` installed
 
 ```
 npm install webpack alarmist alarmist-webpack
@@ -15,13 +15,23 @@ npm install webpack alarmist alarmist-webpack
 
 You can then add something like the following to your `package.json` scripts
 
-```
-    "webpack:watch:alarmist": "alarmist-webpack ./path/to/webpack/config",
+```javascript
+{
+  ...
+  "scripts": {
+    ...
+    "webpack:watch:alarmist": "alarmist-webpack -n job-name -c ./path/to/webpack/config",
+    ...
+  },
+  ...
+}
 ```
 
 Then add that script to the watch jobs started by `alarmist-monitor`.
 
-NB. the webpack config path is optional and will default to `./webpack.config.js`
+The webpack config path is optional and will default to `./webpack.config.js`.
+
+The job name is optional and will default to `webpack`.
 
 ## Contributing
 

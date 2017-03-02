@@ -13,3 +13,6 @@ global.sinon = sinon;
 // override the default webpack config path
 import constants from '../../src/constants';
 constants.DEFAULT_WEBPACK_CONFIG = './test/fixtures/config/default.js';
+
+// stub alarmist methods
+import './alarmist';
