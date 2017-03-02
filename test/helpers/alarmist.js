@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import {Writable} from 'stream';
 
 export const job = {
-  complete: sinon.spy(() => job.callback()),
+  exit: sinon.spy(() => job.callback()),
   log: new Writable({
     write: (chunk, encoding, callback) => {
       job.logBuffer = Buffer.concat([job.logBuffer, chunk]);
@@ -13,7 +13,7 @@ export const job = {
   reset: (callback) => {
     job.callback = callback;
     job.logBuffer = Buffer.alloc(0);
-    job.complete.reset();
+    job.exit.reset();
   },
 };
 

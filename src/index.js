@@ -13,14 +13,12 @@ function watch(name, config) {
     // istanbul ignore if
     if (error) {
       job.log.write(error + '\n');
-      await job.complete({exitCode: 2});
+      await job.complete(2);
     } else {
       job.log.write(stats.toString({
         colors: true,
       }));
-      await job.complete({
-        exitCode: stats.hasErrors() ? 1 : 0,
-      });
+      await job.exit(stats.hasErrors() ? 1 : 0);
     }
   });
 }

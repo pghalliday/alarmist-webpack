@@ -33,9 +33,7 @@ describe('alarmistWebpack', () => {
       });
 
       it('should submit an exit code of 0', () => {
-        job.complete.should.have.been.calledWith({
-          exitCode: 0,
-        });
+        job.exit.should.have.been.calledWith(0);
       });
     });
 
@@ -65,9 +63,7 @@ describe('alarmistWebpack', () => {
       });
 
       it('should submit an exit code of 1', () => {
-        job.complete.should.have.been.calledWith({
-          exitCode: 1,
-        });
+        job.exit.should.have.been.calledWith(1);
       });
     });
   });
