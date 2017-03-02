@@ -23,9 +23,12 @@ Then add that script to the watch jobs started by `alarmist-monitor`.
 
 NB. the webpack config path is optional and will default to `./webpack.config.js`
 
-## npm scripts
+## Contributing
+
+Run lint, tests, build, etc before pushing/submitting PRs
 
 - `npm test` - lint and test
 - `npm run build` - run tests then build
 - `npm run watch` - watch for changes and run build
 - `npm run ci` - run build and submit coverage to coveralls
+- `npm start` - watch for changes and build, lint, test, etc in parallel with alarmist
