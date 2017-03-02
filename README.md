@@ -21,7 +21,7 @@ You can then add something like the following to your `package.json` scripts
 
 Then add that script to the watch jobs started by `alarmist-monitor`.
 
-NB. the webpack config path is optional and will deafult to `./webpack.config.js`
+NB. the webpack config path is optional and will default to `./webpack.config.js`
 
 ## npm scripts
 
