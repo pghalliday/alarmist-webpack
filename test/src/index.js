@@ -23,7 +23,9 @@ describe('alarmistWebpack', () => {
       });
 
       it('should set the job name', () => {
-        alarmist.createJob.should.have.been.calledWith(name);
+        alarmist.createJob.should.have.been.calledWith({
+          name,
+        });
       });
 
       it('should log the output', () => {
@@ -53,7 +55,9 @@ describe('alarmistWebpack', () => {
       });
 
       it('should set the job name', () => {
-        alarmist.createJob.should.have.been.calledWith(name);
+        alarmist.createJob.should.have.been.calledWith({
+          name,
+        });
       });
 
       it('should log the output', () => {
