@@ -3,9 +3,7 @@ import alarmist from 'alarmist';
 
 function watch(name, config) {
   return webpack(config).watch({}, async (error, stats) => {
-    const job = await alarmist.createJob({
-      name,
-    });
+    const job = await alarmist.createJob(name);
     // tell istanbul to ignore the error case
     // as I don't know how to create this scenario
     // in tests
