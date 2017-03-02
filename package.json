@@ -1,6 +1,6 @@
 {
   "name": "alarmist-webpack",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Wrap webpack watch in alarmist jobs",
   "bin": "bin/index.js",
   "main": "lib/index.js",
