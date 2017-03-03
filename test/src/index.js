@@ -30,8 +30,8 @@ describe('alarmistWebpack', () => {
         job.logBuffer.toString().should.match(/Hash:/);
       });
 
-      it('should submit an exit code of 0', () => {
-        job.exit.should.have.been.calledWith(0);
+      it('should not submit an error', () => {
+        job.end.should.have.been.calledWithExactly(undefined);
       });
     });
 
@@ -58,8 +58,8 @@ describe('alarmistWebpack', () => {
         job.logBuffer.toString().should.match(/Hash:/);
       });
 
-      it('should submit an exit code of 1', () => {
-        job.exit.should.have.been.calledWith(1);
+      it('should submit an error', () => {
+        job.end.should.have.been.calledWith('webpack build failed');
       });
     });
   });

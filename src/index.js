@@ -16,7 +16,7 @@ function watch(name, config) {
       job.log.write(stats.toString({
         colors: true,
       }));
-      await job.exit(stats.hasErrors() ? 1 : 0);
+      await job.end(stats.hasErrors() ? 'webpack build failed' : undefined);
     }
   });
 }
