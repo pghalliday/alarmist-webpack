@@ -1,4 +1,8 @@
 {
+  "all": true,
+  "include": [
+    "src/**/*.js"
+  ],
   "check-coverage": false,
   "lines": 100,
   "statements": 100,
