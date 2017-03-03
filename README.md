@@ -1,6 +1,7 @@
 # alarmist-webpack
 
 [![Build Status](https://travis-ci.org/pghalliday/alarmist-webpack.svg?branch=master)](https://travis-ci.org/pghalliday/alarmist-webpack)
+[![Build status](https://ci.appveyor.com/api/projects/status/ax6j5e66u61faprs/branch/master?svg=true)](https://ci.appveyor.com/project/pghalliday/alarmist-webpack/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/pghalliday/alarmist-webpack/badge.svg?branch=master)](https://coveralls.io/github/pghalliday/alarmist-webpack?branch=master)
 
 Wrap webpack watch in alarmist jobs
