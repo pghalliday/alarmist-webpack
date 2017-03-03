@@ -8,7 +8,7 @@ Wrap webpack watch in alarmist jobs
 
 ## Usage
 
-As this is a tool linking `webpack` with `alarmist`, it is expected that your project already has both `alarmist` and `webpack` installed
+As this is a tool linking `webpack` with `alarmist`, it is expected that your project already has both [`alarmist`](https://www.npmjs.com/package/alarmist) and [`webpack`](https://www.npmjs.com/package/webpack) installed
 
 ```
 npm install webpack alarmist alarmist-webpack
