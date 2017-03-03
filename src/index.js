@@ -3,41 +3,51 @@ import webpack from 'webpack';
 import alarmist from 'alarmist';
 
 function watch(name, config) {
-  let job;
+  let promiseForJob;
   const compiler = webpack(config);
-  compiler.plugin('compile', async () => {
-    // Not sure if this can happen
-    // but don't want to orphan jobs in
-    // a pending state
+  compiler.plugin('compile', () => {
+    const previousPromise = promiseForJob;
+    promiseForJob = alarmist.createJob(name);
+    // not sure this can happen (jobs overlapping)
+    // but just in case let's clean up
     //
-    // istanbul ignore if
-    if (!_.isUndefined(job)) {
-      await job.end('aborted');
+    // istanbul ignore next
+    if (!_.isUndefined(previousPromise)) {
+      (async () => {
+        const previousJob = await previousPromise;
+        previousJob.end('aborted: new run started');
+      })();
     }
-    job = await alarmist.createJob(name);
   });
-  return compiler.watch({}, async (error, stats) => {
-    // Not sure if this can be undefined
-    // but don't want to end the same job twice
+  return compiler.watch({}, (error, stats) => {
+    // not sure this can happen (extra handler calls
+    // for a finished job) but just in case we will
+    // make sure we have an outstanding promise for a job
     //
     // istanbul ignore else
-    if (!_.isUndefined(job)) {
-      // tell istanbul to ignore the error case
-      // as I don't know how to create this scenario
-      // in tests
-      //
-      // istanbul ignore if
-      if (error) {
-        job.log.write(error + '\n');
-        await job.end(error + '');
-      } else {
-        job.log.write(stats.toString({
-          colors: true,
-        }));
-        await job.end(stats.hasErrors() ? 'webpack build failed' : undefined);
-      }
-      // finished with job so unset it for safety
-      job = undefined;
+    if (!_.isUndefined(promiseForJob)) {
+      (async (promise) => {
+        // we have to use promises as it's possible that
+        // the webpack build completes before we have a
+        // job!
+        const job = await promise;
+        // tell istanbul to ignore the error case
+        // as I don't know how to create this scenario
+        // in tests
+        //
+        // istanbul ignore if
+        if (error) {
+          job.log.write(error + '\n');
+          await job.end(error + '');
+        } else {
+          job.log.write(stats.toString({
+            colors: true,
+          }));
+          await job.end(stats.hasErrors() ? 'webpack build failed' : undefined);
+        }
+      })(promiseForJob);
+      // finished with promise so unset for safety
+      promiseForJob = undefined;
     }
   });
 }
