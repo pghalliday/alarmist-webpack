@@ -11,7 +11,7 @@ Wrap webpack watch in alarmist jobs
 As this is a tool linking `webpack` with `alarmist`, it is expected that your project already has both [`alarmist`](https://www.npmjs.com/package/alarmist) and [`webpack`](https://www.npmjs.com/package/webpack) installed
 
 ```
-npm install webpack alarmist alarmist-webpack
+npm install --save-dev webpack alarmist alarmist-webpack
 ```
 
 You can then add something like the following to your `package.json` scripts
