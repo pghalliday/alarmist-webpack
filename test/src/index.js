@@ -3,6 +3,8 @@ import alarmist from 'alarmist';
 import {job} from '../helpers/alarmist';
 
 const name = 'name';
+const workingDir = 'working dir';
+const color = false;
 let watcher;
 
 describe('alarmistWebpack', () => {
@@ -10,11 +12,16 @@ describe('alarmistWebpack', () => {
     describe('with a successful build', () => {
       before((done) => {
         job.reset(done);
-        watcher = alarmistWebpack.watch(name, {
-          entry: './test/fixtures/webpack/success/index.js',
-          output: {
-            path: './.temp',
-            filename: 'bundle.js',
+        watcher = alarmistWebpack.watch({
+          name,
+          workingDir,
+          color,
+          config: {
+            entry: './test/fixtures/webpack/success/index.js',
+            output: {
+              path: './.temp',
+              filename: 'bundle.js',
+            },
           },
         });
       });
@@ -23,7 +30,10 @@ describe('alarmistWebpack', () => {
       });
 
       it('should set the job name', () => {
-        alarmist.createJob.should.have.been.calledWith(name);
+        alarmist.createJob.should.have.been.calledWith({
+          name,
+          workingDir,
+        });
       });
 
       it('should log the output', () => {
@@ -38,11 +48,16 @@ describe('alarmistWebpack', () => {
     describe('with a failing build', () => {
       before((done) => {
         job.reset(done);
-        watcher = alarmistWebpack.watch(name, {
-          entry: './test/fixtures/webpack/fail/index.js',
-          output: {
-            path: './.temp',
-            filename: 'bundle.js',
+        watcher = alarmistWebpack.watch({
+          name,
+          workingDir,
+          color,
+          config: {
+            entry: './test/fixtures/webpack/fail/index.js',
+            output: {
+              path: './.temp',
+              filename: 'bundle.js',
+            },
           },
         });
       });
@@ -51,7 +66,10 @@ describe('alarmistWebpack', () => {
       });
 
       it('should set the job name', () => {
-        alarmist.createJob.should.have.been.calledWith(name);
+        alarmist.createJob.should.have.been.calledWith({
+          name,
+          workingDir,
+        });
       });
 
       it('should log the output', () => {

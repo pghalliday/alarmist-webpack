@@ -2,12 +2,15 @@ import _ from 'lodash';
 import webpack from 'webpack';
 import alarmist from 'alarmist';
 
-function watch(name, config) {
+function watch({name, config, workingDir, color}) {
   let promiseForJob;
   const compiler = webpack(config);
   compiler.plugin('compile', () => {
     const previousPromise = promiseForJob;
-    promiseForJob = alarmist.createJob(name);
+    promiseForJob = alarmist.createJob({
+      name,
+      workingDir,
+    });
     // not sure this can happen (jobs overlapping)
     // but just in case let's clean up
     //
@@ -41,7 +44,7 @@ function watch(name, config) {
           await job.end(error + '');
         } else {
           job.log.write(stats.toString({
-            colors: true,
+            colors: color,
           }));
           await job.end(stats.hasErrors() ? 'webpack build failed' : undefined);
         }

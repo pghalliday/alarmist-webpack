@@ -30,9 +30,30 @@ You can then add something like the following to your `package.json` scripts
 
 Then add that script to the watch jobs started by `alarmist-monitor`.
 
-The webpack config path is optional and will default to `./webpack.config.js`.
+```
+Usage: alarmist-webpack [options]
 
-The job name is optional and will default to `webpack`.
+Start webpack in watch mode. The working directory
+should match the working directory of the monitor and usually this will
+be the default. If the job is started via a watcher started
+by the monitor then the 'ALARMIST_WORKING_DIRECTORY' environment
+variable will have already been set.
+
+Environment Variables:
+
+FORCE_COLOR
+ALARMIST_WORKING_DIRECTORY
+ALARMIST_WEBPACK_NAME
+ALARMIST_WEBPACK_CONFIG
+
+Options:
+    --name, -n            The name to use for the job (default: "webpack")
+    --working-dir, -w     The directory in which to write logs, etc (default: ".alarmist")
+    --config, -f          webpack config file path (default: "webpack.config.js")
+    --colors, -c          turn on colors for webpack stats report (default: true)
+    --help, -h            Show help
+    --version, -v         Show version number
+```
 
 ## Contributing
 

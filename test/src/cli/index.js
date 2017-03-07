@@ -3,60 +3,32 @@ import alarmistWebpack from '../../../src';
 import path from 'path';
 import {
   DEFAULT_WEBPACK_CONFIG,
-  DEFAULT_JOB_NAME,
 } from '../../../src/constants';
+import {
+  DEFAULT_JOB_NAME,
+  DEFAULT_COLOR_OPTION,
+  DEFAULT_WORKING_DIR,
+} from '../../../src/cli/constants';
 
-const overrideFixture = './test/fixtures/config/override.js';
-const overrideConfig = require(path.resolve(process.cwd(), overrideFixture));
-const defaultConfig = require(
+const config = require(
   path.resolve(process.cwd(), DEFAULT_WEBPACK_CONFIG)
 );
-const name = 'name';
 
 describe('cli', () => {
   before(() => {
     sinon.stub(alarmistWebpack, 'watch', () => Promise.resolve());
+    cli([]);
   });
   after(() => {
     alarmistWebpack.watch.restore();
   });
 
-  describe('without a config path or name', () => {
-    before(() => {
-      alarmistWebpack.watch.reset();
-      cli([]);
-    });
-
-    it('should start the watcher', () => {
-      alarmistWebpack.watch.should.have.been.calledWith(
-        DEFAULT_JOB_NAME, defaultConfig
-      );
-    });
-  });
-
-  describe('with a config path', () => {
-    before(() => {
-      alarmistWebpack.watch.reset();
-      cli(['-c', overrideFixture]);
-    });
-
-    it('should start the watcher', () => {
-      alarmistWebpack.watch.should.have.been.calledWith(
-        DEFAULT_JOB_NAME, overrideConfig
-      );
-    });
-  });
-
-  describe('with a name', () => {
-    before(() => {
-      alarmistWebpack.watch.reset();
-      cli(['-n', name]);
-    });
-
-    it('should start the watcher', () => {
-      alarmistWebpack.watch.should.have.been.calledWith(
-        name, defaultConfig
-      );
+  it('should start the watcher', () => {
+    alarmistWebpack.watch.should.have.been.calledWith({
+      name: DEFAULT_JOB_NAME,
+      workingDir: DEFAULT_WORKING_DIR,
+      color: DEFAULT_COLOR_OPTION,
+      config,
     });
   });
 });
